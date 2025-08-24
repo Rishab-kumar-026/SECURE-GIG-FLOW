@@ -1,9 +1,9 @@
+import jwt, { Secret, SignOptions } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
 import User from '../models/User';
-import { AppError } from '../utils/errors';
-import { logger } from '../config/logger';
+import { AppError, catchAsync } from './errorHandler';
 import { env } from '../config/env';
+import { logger } from '../config/logger';
 
 // Extend Request interface to include user
 declare global {
@@ -201,11 +201,11 @@ export const generateToken = (user: { _id: string; email: string; role: 'client'
     role: user.role
   };
 
-  return jwt.sign(payload, env.JWT_SECRET, {
+  return jwt.sign(payload, env.JWT_SECRET as Secret, {
     expiresIn: env.JWT_EXPIRES_IN || '7d',
     issuer: 'secure-gig-api',
     audience: 'secure-gig-app'
-  });
+  } as SignOptions);
 };
 
 /**

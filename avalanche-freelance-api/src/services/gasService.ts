@@ -62,7 +62,7 @@ export async function getGasSuggestion(): Promise<GasSuggestion> {
     return result;
 
   } catch (error) {
-    logger.error('Error getting gas suggestion:', error);
+    logger.error('Error getting gas suggestion:', error as Record<string, any>);
     throw new Error('Failed to get gas suggestion');
   }
 }
@@ -84,7 +84,7 @@ export async function estimateGasForTransaction(
     logger.debug(`Gas estimate for transaction: ${gasEstimate.toString()}`);
     return gasEstimate.toString();
   } catch (error) {
-    logger.error('Error estimating gas:', error);
+    logger.error('Error estimating gas:', error as Record<string, any>);
     throw new Error('Failed to estimate gas');
   }
 }

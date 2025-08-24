@@ -32,13 +32,13 @@ export async function getTx(hash: string): Promise<TransactionDetails> {
       const enrichedResponse = await glacier.get(`/chains/${chain}/transactions/${hash}`);
       enriched = enrichedResponse.data;
     } catch (glacierError) {
-      logger.warn(`Failed to get enriched data for tx ${hash}:`, glacierError);
+      logger.warn(`Failed to get enriched data for tx ${hash}:`, glacierError as Record<string, any>);
     }
 
     logger.debug(`Retrieved transaction details for: ${hash}`);
     return { tx, receipt, enriched };
   } catch (error) {
-    logger.error(`Error getting transaction ${hash}:`, error);
+    logger.error(`Error getting transaction ${hash}:`, error as Record<string, any>);
     throw new Error('Failed to retrieve transaction details');
   }
 }
@@ -66,7 +66,7 @@ export async function getTransactionStatus(hash: string): Promise<TransactionSta
       effectiveGasPrice: receipt.gasPrice?.toString()
     };
   } catch (error) {
-    logger.error(`Error getting transaction status for ${hash}:`, error);
+    logger.error(`Error getting transaction status for ${hash}:`, error as Record<string, any>);
     throw new Error('Failed to get transaction status');
   }
 }
@@ -88,7 +88,7 @@ export async function waitForTransaction(
     logger.info(`Transaction ${hash} confirmed with ${confirmations} confirmations`);
     return receipt;
   } catch (error) {
-    logger.error(`Error waiting for transaction ${hash}:`, error);
+    logger.error(`Error waiting for transaction ${hash}:`, error as Record<string, any>);
     throw new Error('Transaction confirmation failed');
   }
 }
@@ -105,7 +105,7 @@ export async function getTransactionLogs(hash: string): Promise<any[]> {
     // Convert readonly Log[] to a mutable array
     return [...receipt.logs];
   } catch (error) {
-    logger.error(`Error getting transaction logs for ${hash}:`, error);
+    logger.error(`Error getting transaction logs for ${hash}:`, error as Record<string, any>);
     throw new Error('Failed to retrieve transaction logs');
   }
 }

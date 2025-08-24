@@ -10,7 +10,7 @@ chain.get("/gas", async (_req, res, next) => {
     const gasSuggestion = await getGasSuggestion();
     res.json(gasSuggestion);
   } catch (error) {
-    logger.error('Error getting gas suggestion:', error);
+    logger.error('Error getting gas suggestion:', error as Record<string, any>);
     next(error);
   }
 });
@@ -26,7 +26,7 @@ chain.get("/info", async (_req, res, next) => {
       blockNumber
     });
   } catch (error) {
-    logger.error('Error getting chain info:', error);
+    logger.error('Error getting chain info:', error as Record<string, any>);
     next(error);
   }
 });

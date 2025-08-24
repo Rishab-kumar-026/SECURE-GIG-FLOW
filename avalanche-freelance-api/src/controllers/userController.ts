@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import User, { IUser } from '../models/User';
-import { catchAsync, AppError } from '../middleware/errorHandler';
+import { AppError, catchAsync } from '../middleware/errorHandler';
+import { logger } from '../config/logger';
+import { Types } from 'mongoose';
 import { profileUpdateSchema, paginationSchema } from '../validation/schemas';
-import { logger } from '../utils/logger';
 
 // Update user profile
 export const updateProfile = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -196,7 +197,7 @@ export const updatePortfolioItem = catchAsync(async (req: Request, res: Response
     return next(new AppError('Portfolio not found', 404));
   }
 
-  const portfolioItem = user.profile.portfolio.id(portfolioId);
+  const portfolioItem = user.profile.portfolio.find((item: any) => item._id.toString() === portfolioId);
   if (!portfolioItem) {
     return next(new AppError('Portfolio item not found', 404));
   }
@@ -228,12 +229,12 @@ export const deletePortfolioItem = catchAsync(async (req: Request, res: Response
     return next(new AppError('Portfolio not found', 404));
   }
 
-  const portfolioItem = user.profile.portfolio.id(portfolioId);
-  if (!portfolioItem) {
+  const portfolioItemIndex = user.profile.portfolio.findIndex((item: any) => item._id.toString() === portfolioId);
+  if (portfolioItemIndex === -1) {
     return next(new AppError('Portfolio item not found', 404));
   }
 
-  portfolioItem.deleteOne();
+  user.profile.portfolio.splice(portfolioItemIndex, 1);
   await user.save();
 
   logger.info(`Portfolio item deleted for user: ${user.email}`);
@@ -357,7 +358,7 @@ export const addReview = catchAsync(async (req: Request, res: Response, next: Ne
 
   // Add review
   user.ratings.reviews.push({
-    reviewerId: req.user!._id,
+    reviewerId: new Types.ObjectId(req.user!._id as string),
     rating: parseInt(rating),
     comment: comment?.trim(),
     createdAt: new Date()
