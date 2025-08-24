@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { Secret } from 'jsonwebtoken';
 import User, { IUser } from '../models/User';
 import { catchAsync, AppError } from '../middleware/errorHandler';
 import { signupSchema, loginSchema } from '../validation/schemas';
@@ -7,7 +7,7 @@ import { logger } from '../config/logger';
 
 // Generate JWT token
 const signToken = (id: string): string => {
-  return jwt.sign({ id }, process.env.JWT_SECRET as string, {
+  return jwt.sign({ id }, process.env.JWT_SECRET as Secret, {
     expiresIn: process.env.JWT_EXPIRES_IN || '7d'
   } as jwt.SignOptions);
 };
@@ -178,7 +178,14 @@ export const protect = catchAsync(async (req: Request, res: Response, next: Next
   }
 
   // Grant access to protected route
-  req.user = currentUser;
+  req.user = {
+    _id: currentUser._id.toString(),
+    id: currentUser._id.toString(),
+    email: currentUser.email,
+    role: currentUser.role,
+    name: currentUser.name,
+    isVerified: currentUser.isVerified
+  };
   next();
 });
 
@@ -329,7 +336,10 @@ const calculateRatingDistribution = (reviews: any[]): { [key: number]: number } 
   const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
   
   reviews.forEach(review => {
-    distribution[review.rating]++;
+    const rating = review.rating as keyof typeof distribution;
+    if (rating >= 1 && rating <= 5) {
+      distribution[rating]++;
+    }
   });
 
   return distribution;

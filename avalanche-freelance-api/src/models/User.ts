@@ -1,7 +1,8 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 export interface IUser extends Document {
+  _id: Types.ObjectId | string;
   name: string;
   email: string;
   phone?: string;
@@ -255,7 +256,7 @@ const UserSchema: Schema = new Schema({
   timestamps: true,
   toJSON: {
     transform: function(doc, ret) {
-      delete ret.password;
+      delete (ret as any).password;
       return ret;
     }
   }

@@ -8,7 +8,14 @@ import { jobSearchSchema, jobPostSchema, jobPostUpdateSchema } from '../validati
 
 // Extend Request interface for authenticated requests
 interface AuthenticatedRequest extends Request {
-  user?: IUser;
+  user?: {
+    _id: string;
+    id: string;
+    email: string;
+    role: "client" | "freelancer";
+    name: string;
+    isVerified: boolean;
+  };
 }
 
 // Create new job post

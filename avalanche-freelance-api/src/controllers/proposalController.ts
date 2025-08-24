@@ -576,7 +576,7 @@ export const getClientJobProposals = async (req: Request, res: Response, next: N
     const jobIds = clientJobs.map(job => job._id);
 
     if (jobIds.length === 0) {
-      return res.json({
+      res.json({
         success: true,
         data: {
           proposals: [],
@@ -590,6 +590,7 @@ export const getClientJobProposals = async (req: Request, res: Response, next: N
           }
         }
       });
+      return;
     }
 
     // Build filter for proposals on client's jobs
@@ -632,7 +633,7 @@ export const getClientJobProposals = async (req: Request, res: Response, next: N
       totalCount
     });
 
-    return res.json({
+    res.json({
       success: true,
       data: {
         proposals,

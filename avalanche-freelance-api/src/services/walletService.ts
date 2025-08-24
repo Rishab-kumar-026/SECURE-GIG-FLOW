@@ -62,7 +62,7 @@ export async function getBalances(address: string): Promise<BalanceResponse> {
       erc20: erc20Response.data.erc20TokenBalances || []
     };
   } catch (error) {
-    logger.error('Error getting balances:', error);
+    logger.error('Error getting balances:', error as Record<string, any>);
     throw new Error('Failed to retrieve balances');
   }
 }
@@ -84,7 +84,7 @@ export async function getLatestTransactions(
     
     return response.data.transactions || [];
   } catch (error) {
-    logger.error('Error getting latest transactions:', error);
+    logger.error('Error getting latest transactions:', error as Record<string, any>);
     throw new Error('Failed to retrieve transaction history');
   }
 }
@@ -115,7 +115,7 @@ export async function getTokenBalance(
     
     return tokenBalance || null;
   } catch (error) {
-    logger.error('Error getting token balance:', error);
+    logger.error('Error getting token balance:', error as Record<string, any>);
     throw new Error('Failed to retrieve token balance');
   }
 }
@@ -140,7 +140,7 @@ export async function getTransactionsByContract(
     
     return response.data.transactions || [];
   } catch (error) {
-    logger.error('Error getting contract transactions:', error);
+    logger.error('Error getting contract transactions:', error as Record<string, any>);
     throw new Error('Failed to retrieve contract transactions');
   }
 }
