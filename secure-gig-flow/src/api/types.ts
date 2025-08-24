@@ -387,6 +387,13 @@ export interface PopulatedProposal extends Omit<ProposalData, 'jobId' | 'freelan
     isVerified: boolean;
   };
   freelancer?: User;
+  deliverables?: Array<{
+    _id?: string;
+    title: string;
+    description: string;
+    dueDate?: string;
+    status?: 'pending' | 'in_progress' | 'completed';
+  }>;
 }
 
 export interface ProposalSearchFilters {

@@ -31,9 +31,12 @@ interface NavLink {
 interface DashboardLayoutProps {
   navLinks: NavLink[];
   children: React.ReactNode;
+  userName?: string;
+  userRole?: string;
+  userAvatar?: string;
 }
 
-export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ navLinks, children }) => {
+export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ navLinks, children, userName, userRole, userAvatar }) => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);

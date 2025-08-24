@@ -13,7 +13,7 @@ export interface NetworkDiagnostic {
 export class NetworkDebugger {
   private baseURL: string;
 
-  constructor(baseURL: string = 'http://localhost:4000') {
+  constructor(baseURL: string = import.meta.env.VITE_API_URL || 'https://secure-gig-flow-backend.onrender.com') {
     this.baseURL = baseURL;
   }
 
@@ -61,7 +61,7 @@ export class NetworkDebugger {
         message: 'Cannot reach server',
         details: { 
           error: error.message,
-          suggestion: 'Ensure backend server is running on http://localhost:4000'
+          suggestion: 'Check your internet connection and backend server status'
         }
       };
     }
@@ -72,7 +72,7 @@ export class NetworkDebugger {
       const response = await fetch(`${this.baseURL}/api/auth/signup`, {
         method: 'OPTIONS',
         headers: {
-          'Origin': 'http://localhost:8081',
+          'Origin': window.location.origin,
           'Access-Control-Request-Method': 'POST',
           'Access-Control-Request-Headers': 'Content-Type'
         }
@@ -153,7 +153,7 @@ export class NetworkDebugger {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'Origin': 'http://localhost:8081'
+          'Origin': window.location.origin
         },
         credentials: 'include',
         body: JSON.stringify({}) // Empty body should trigger validation error
@@ -203,7 +203,7 @@ export class NetworkDebugger {
         status: 'warning',
         message: 'VITE_API_URL not set, using default',
         details: { 
-          current: 'http://localhost:4000 (default)',
+          current: 'https://secure-gig-flow-backend.onrender.com (default)',
           suggestion: 'Set VITE_API_URL in .env file'
         }
       };

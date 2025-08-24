@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { EscrowService, EscrowStatusEnum } from '../../lib/escrow';
+import { EscrowService } from '../../lib/escrow';
 import { EscrowState, PopulatedProposal } from '../../api/types';
 import { apiClient } from '../../api/client';
 import { Shield, Clock, CheckCircle, XCircle, ExternalLink } from 'lucide-react';
@@ -13,9 +13,10 @@ interface EscrowStatusProps {
   userRole: 'client' | 'freelancer';
   userAddress: string;
   userId?: string; // Add userId to fetch user's proposals
+  gigIds?: number[]; // Add gigIds for backward compatibility
 }
 
-export function EscrowStatus({ userRole, userAddress, userId }: EscrowStatusProps) {
+export function EscrowStatus({ userRole, userAddress, userId, gigIds }: EscrowStatusProps) {
   const [escrows, setEscrows] = useState<EscrowState[]>([]);
   const [proposals, setProposals] = useState<PopulatedProposal[]>([]);
   const [loading, setLoading] = useState(true);

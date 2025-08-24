@@ -77,7 +77,7 @@ const Settings = () => {
   const handleProfileUpdate = async () => {
     try {
       // Update user data in backend
-      const response = await fetch(`http://localhost:3001/api/users/${profile.address}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://secure-gig-flow-backend.onrender.com'}/api/users/${profile.address}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

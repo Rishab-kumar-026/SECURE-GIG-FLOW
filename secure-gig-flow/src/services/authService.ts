@@ -40,7 +40,7 @@ export const loginUser = async (credentials: SchemaLoginRequest): Promise<AuthRe
       throw new Error(error.response.data.message || 'Login failed');
     }
     if (error.message?.includes('ECONNREFUSED') || error.message?.includes('Network Error')) {
-      throw new Error('Unable to connect to server. Please ensure the backend is running on http://localhost:4000');
+      throw new Error('Unable to connect to server. Please check your internet connection.');
     }
     throw new Error(error.message || 'Network error. Please check your connection.');
   }
@@ -90,7 +90,7 @@ export const signupUser = async (userData: SchemaSignupRequest): Promise<AuthRes
       throw new Error(errorMessage);
     }
     if (error.message?.includes('ECONNREFUSED') || error.message?.includes('Network Error')) {
-      throw new Error('Unable to connect to server. Please ensure the backend is running on http://localhost:4000');
+      throw new Error('Unable to connect to server. Please check your internet connection.');
     }
     throw new Error(error.message || 'Network error. Please check your connection.');
   }
