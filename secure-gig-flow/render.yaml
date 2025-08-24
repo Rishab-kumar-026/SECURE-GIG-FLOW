@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: secure-gig-frontend
+    env: static
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_AVALANCHE_NETWORK
+        value: fuji
+      - key: VITE_SNOWTRACE_URL
+        value: https://testnet.snowtrace.io
+      - key: VITE_ESCROW_CONTRACT_ADDRESS
+        value: 0x7B7781187eff5d5D6c75154282DF57882f2fDfAB
+      - key: VITE_ESCROW_DAO_ADDRESS
+        value: 0x49E4B659f5A4F9BFB34347c5e95f606425E8AD32
+      - key: VITE_DAO_TOKEN_ADDRESS
+        value: 0xB57FBeF85bD1A1643eF9EA3734DAe65494246247
+      - key: VITE_AVALANCHE_FUJI_RPC
+        value: https://rpc.ankr.com/avalanche_fuji
+      - key: VITE_AVALANCHE_MAINNET_RPC
+        value: https://api.avax.network/ext/bc/C/rpc
+      - key: VITE_ENVIRONMENT
+        value: production

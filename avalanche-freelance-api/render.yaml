@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: secure-gig-api
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: AVALANCHE_RPC_URL
+        value: https://rpc.ankr.com/avalanche_fuji
+      - key: AVALANCHE_CHAIN_ID
+        value: 43113
+      - key: GIG_ESCROW_ADDRESS
+        value: 0x7B7781187eff5d5D6c75154282DF57882f2fDfAB
+      - key: DAO_TOKEN_ADDRESS
+        value: 0xB57FBeF85bD1A1643eF9EA3734DAe65494246247
+      - key: ESCROW_DAO_ADDRESS
+        value: 0x49E4B659f5A4F9BFB34347c5e95f606425E8AD32
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: LOG_LEVEL
+        value: info

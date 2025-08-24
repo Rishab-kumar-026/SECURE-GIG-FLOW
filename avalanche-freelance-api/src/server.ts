@@ -15,8 +15,8 @@ const httpServer = createServer(app);
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: ['http://localhost:8081','http://localhost:8080', 'http://localhost:3000','*'], // Allow specific frontend origins
-  credentials: true, // Enable credentials support
+  origin: '*', // Allow all origins for production deployment
+  credentials: false, // Disable credentials for wildcard origin
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
   exposedHeaders: ['Set-Cookie']
